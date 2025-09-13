@@ -1,0 +1,36 @@
+@charset "ISO-8859-1";
+.container
+{
+	color: white;
+	margin-top: -200px;
+}
+table
+{
+	margin-left: 39%;
+	margin-bottom: 25px;
+}
+table tr td
+{
+	font-size: 25px;
+	margin: 0px 10px;
+	text-align: left;
+}
+table tr td label
+{
+	font-size: 25px;
+	margin: 0px 15px;
+}
+
+table tr td input
+{
+	margin: 10px;
+	padding:5px 10px;
+}
+.container form .button
+{
+	font-size :20px;
+	color: black;
+	background: rgb(245 164 37);
+	padding: 10px 20px;
+	font: 800;
+}

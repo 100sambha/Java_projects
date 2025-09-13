@@ -1,0 +1,31 @@
+@charset "ISO-8859-1";
+
+.showusertable
+{
+	margin: 120px 0px 0px 150px;
+	color: white;
+}
+
+
+.tableT
+{	
+	border-collapse: collapse;	
+}
+.tableR
+{
+	border-collapse: collapse;	
+	border: 2px solid red;
+}
+.tableT .tableR td
+{
+	border-collapse: collapse;	
+	border: 2px solid #868686;
+	padding: 5px 10px;
+	text-align: center;
+}
+.tableT .tableR th
+{
+	border-collapse: collapse;	
+	border: 2px solid #868686;
+	padding: 10px
+}

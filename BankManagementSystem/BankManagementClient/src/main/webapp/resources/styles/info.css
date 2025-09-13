@@ -1,0 +1,13 @@
+@charset "ISO-8859-1";
+.iTable
+{
+	color: white;
+	padding: 0;
+	margin-left: 300px;
+	position: absolute;
+	top: -200px;
+	left: 0%;
+	height: 500px;
+	width: 50%;
+	text-align: left;
+}

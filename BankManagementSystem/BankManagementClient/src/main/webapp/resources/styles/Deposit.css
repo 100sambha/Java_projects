@@ -1,0 +1,23 @@
+#a
+{
+	margin-bottom:-10px; 
+}
+#b
+{
+	font-size: 25px;
+}
+#ammount
+{
+	padding: 10px 15px;
+	font-size: 15px;
+	font-weight: bold;
+	margin: 10px 0px;
+	margin-bottom: 25px;
+}
+.amtsubBtn
+{
+	padding: 10px 25px;
+	background: #f5a425;
+	font-weight: bold;
+	font-size: 15px;
+}

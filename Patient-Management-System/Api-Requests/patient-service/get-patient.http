@@ -1,0 +1,5 @@
+### Get Request to get all patients
+
+http://localhost:8090/patient/list
+
+###

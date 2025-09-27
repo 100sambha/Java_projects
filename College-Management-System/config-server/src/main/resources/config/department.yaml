@@ -1,0 +1,36 @@
+server:
+ port: 8081
+
+eureka:
+ client:
+  serviceUrl:
+   defaultZone: "http://localhost:8085/eureka"
+   
+   
+spring:   
+# jpa:
+#  show-sql: true
+#  hibernate:
+#   ddl-auto: update
+#  database-platform: "org.hibernate.dialect.MySQL8Dialect"
+#
+# datasource:
+#  username: root
+#  password: admin
+#  url: "jdbc:mysql://127.0.0.1:3306/departmentdb?createDatabaseIfNotExist=true"
+#  driverClassName: com.mysql.cj.jdbc.Driver
+  
+ h2:
+  console.enabled: true
+ datasource:
+  url: jdbc:h2:mem:dcbapp
+  driver-class-name: org.h2.Driver
+  username: sa
+  password: password
+ jpa:
+  spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+
+management:
+ tracing:
+  sampling:
+   probability: 1.0  

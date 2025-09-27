@@ -1,0 +1,41 @@
+{
+    "name":"Sambhaji",
+	"email":"100sambha@gmail.com",
+	"dob":"2012-10-01T09:45:00:700",
+	"departmentId":100,
+	"joiningDate":"2012-10-01T09:45:00:700",
+	"address":"Pune",
+	"salary":161.12,
+	"contactNumber":"265689456",
+	"emergencyContactNumber":"2454451",
+	"gender":"Male",
+	"type":"PEON"
+}
+
+{
+    "name":"Tushar",
+	"email":"thajare@gmail.com",
+	"dob":"2025-05-10T10:05:40:200",
+	"departmentId":101,
+	"joiningDate":"2025-12-22T05:10:04:654",
+	"address":"Karjat",
+	"salary":32314,
+	"contactNumber":"78945698574",
+	"emergencyContactNumber":"7896547895",
+	"gender":"Male",
+	"type":"Test"
+}
+
+{
+    "name":"Kumar",
+	"email":"k10@gmail.com",
+	"dob":"2022-10-02T03:10:24:350",
+	"departmentId":100,
+	"joiningDate":"2050-06-02T15:10:44:144",
+	"address":"Shevgaon",
+	"salary":46513,
+	"contactNumber":"9857463210",
+	"emergencyContactNumber":"9685741230",
+	"gender":"Male",
+	"type":"Demo"
+}

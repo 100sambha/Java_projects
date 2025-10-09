@@ -1,22 +1,105 @@
-INSERT INTO Address(id, city,state,country) values('8f2b9153-c3e6-453e-9777-6d914a9712fe','Nagar', 'Mah', 'IND');
-INSERT INTO Address(id, city,state,country) values('4ea34780-a30f-4f2c-9bf7-f15e6a7d3d76','Pune', 'Mah', 'IND');
-INSERT INTO Address(id, city,state,country) values('c7743a76-1e68-49fc-be0e-75c8dc2cc50c','Beed', 'Mah', 'IND');
-INSERT INTO Address(id, city,state,country) values('d4473eab-3be9-445e-9b9b-5878fa0db762','Latur', 'Mah', 'IND');
-INSERT INTO Address(id, city,state,country) values('f9b26a5e-ea44-4925-ac81-6078d98f94b1','Nagar', 'Mah', 'IND');
+# Insert Commands (data.sql)
 
-INSERT INTO PATIENT(id,name,email,date_Of_Birth,registered_Date,address_id) values('72b0da01-9fe4-41ad-af72-541a5ea8acd6','shankar','100sambha@gmail.com','2025-02-02','2025-02-03','8f2b9153-c3e6-453e-9777-6d914a9712fe');
-INSERT INTO PATIENT(id,name,email,date_Of_Birth,registered_Date,address_id) values('dfbab196-aca3-4496-b78b-08ea8f614279','shankar','101sambha@gmail.com','2025-02-02','2025-02-03','4ea34780-a30f-4f2c-9bf7-f15e6a7d3d76');
-INSERT INTO PATIENT(id,name,email,date_Of_Birth,registered_Date,address_id) values('93b9c47f-c955-47ff-b054-9f00738964d6','shankar','102sambha@gmail.com','2025-02-02','2025-02-03','c7743a76-1e68-49fc-be0e-75c8dc2cc50c');
-INSERT INTO PATIENT(id,name,email,date_Of_Birth,registered_Date,address_id) values('80b0cf94-bd7c-42db-89a7-d8d192680200','shankar','103sambha@gmail.com','2025-02-02','2025-02-03','d4473eab-3be9-445e-9b9b-5878fa0db762');
-INSERT INTO PATIENT(id,name,email,date_Of_Birth,registered_Date,address_id) values('3d520727-d250-4c4e-a3b2-61ff8b28f27c','shankar','104sambha@gmail.com','2025-02-02','2025-02-03','f9b26a5e-ea44-4925-ac81-6078d98f94b1');
+```sql
+## Individual Inserts
+INSERT INTO Address (id, city, state, country) 
+VALUES ('8f2b9153-c3e6-453e-9777-6d914a9712fe', 'Nagar', 'MH', 'IND');
 
+INSERT INTO Address (id, city, state, country) 
+VALUES ('4ea34780-a30f-4f2c-9bf7-f15e6a7d3d76', 'Pune', 'MH', 'IND');
 
-SELECT * FROM PATIENT;
+INSERT INTO Address (id, city, state, country) 
+VALUES ('c7743a76-1e68-49fc-be0e-75c8dc2cc50c', 'Beed', 'MH', 'IND');
 
-SELECT * FROM PATIENT;
+INSERT INTO Address (id, city, state, country) 
+VALUES ('d4473eab-3be9-445e-9b9b-5878fa0db762', 'Latur', 'MH', 'IND');
 
-
-SHOW COLUMNS FROM PATIENT;
-SHOW COLUMNS FROM ADDRESS;
+INSERT INTO Address (id, city, state, country) 
+VALUES ('f9b26a5e-ea44-4925-ac81-6078d98f94b1', 'Nagar', 'MH', 'IND');
 
 
+## Multi Row Inserts
+INSERT INTO Patient (id, name, email, date_of_birth, registered_date, address_id) VALUES
+  ('72b0da01-9fe4-41ad-af72-541a5ea8acd6', 'Shankar', '100sambha@gmail.com', '2025-02-02', '2025-02-03', '8f2b9153-c3e6-453e-9777-6d914a9712fe'),
+  ('dfbab196-aca3-4496-b78b-08ea8f614279', 'Shankar', '101sambha@gmail.com', '2025-02-02', '2025-02-03', '4ea34780-a30f-4f2c-9bf7-f15e6a7d3d76'),
+  ('93b9c47f-c955-47ff-b054-9f00738964d6', 'Shankar', '102sambha@gmail.com', '2025-02-02', '2025-02-03', 'c7743a76-1e68-49fc-be0e-75c8dc2cc50c'),
+  ('80b0cf94-bd7c-42db-89a7-d8d192680200', 'Shankar', '103sambha@gmail.com', '2025-02-02', '2025-02-03', 'd4473eab-3be9-445e-9b9b-5878fa0db762'),
+  ('3d520727-d250-4c4e-a3b2-61ff8b28f27c', 'Shankar', '104sambha@gmail.com', '2025-02-02', '2025-02-03', 'f9b26a5e-ea44-4925-ac81-6078d98f94b1');
+```
+
+#
+> - SELECT * FROM PATIENT;
+> - SELECT * FROM PATIENT;
+> - SHOW COLUMNS FROM PATIENT;
+> - SHOW COLUMNS FROM ADDRESS;
+#
+
+## validated Annotation use
+> @Validated({UpdatePatientValidationGroup.class, Default.class})		-->used with controller class methods
+
+> @NotBlank(groups=UpdatePatientValidationGroup.class, message="Required")	-->We can ignore this field when we are updating the filed in json, only if we are not setting it in service class update method, like in create method. used with model classes
+
+
+#
+# Docker
+
+1. **Lightweight Containers**  
+   - Docker simplifies building and deploying applications using **lightweight, portable containers**.  
+
+2. **Cross-Platform Compatibility**  
+   - A single Docker image can run on multiple environments (Windows, Linux, or cloud platforms like AWS, Azure, GCP).  
+
+3. **All-in-One Packaging**  
+   - Source code (e.g., Java), configuration files, and dependencies can be bundled together in a single Docker image.  
+
+4. **Image → Container**  
+   - A Docker image acts as a **blueprint**.  
+   - From this blueprint, we can create one or many **Docker containers** (the actual running instances of the app).  
+
+5. **Docker Image Registry**  
+   - Docker images can be uploaded to a **registry** (e.g., Docker Hub, AWS ECR, Azure Container Registry, or a private/local registry).  
+   - Registries let us **store, manage, and distribute** images.  
+
+6. **Pull & Run**  
+   - From a registry, we can **pull an image** and start containers based on it.  
+   - This is where the **application actually runs**.   
+
+## Docker Commands
+
+   - docker pull postgres:latest
+
+   - docker images
+   - docker ps
+   - docker ps -a
+
+   - docker network ls
+   - docker network create patient-network
+   - docker inspect patient-network
+
+   - docker run -d \
+      --name postgres-db \
+      --network patient-network \
+      -e POSTGRES_USER=root \
+      -e POSTGRES_PASSWORD=admin \
+      -e POSTGRES_DB=patients_records \
+      -v my_pgdata:/var/lib/postgresql/data \
+      -p 5000:5432 \
+      postgres:latest
+   
+   - docker start postgres-db
+   - docker stop postgres-db
+
+   - docker exec -it postgres-db psql -U root -d patients_records
+
+### Some postgres-db commands
+   | Title | Description |
+   |---|---|
+   | \l                             | list databases |
+   | \list                          | list databases |
+   | \c                             | database_nameConnect to a database |
+   | \dt                            | List tables in current database |
+   | \d table_name                  | Show table structure (columns, types, constraints) |
+   | CREATE DATABASE dbname;	      | Create a new database |
+   | DROP DATABASE dbname;	         | Delete a database |
+   | \c dbname	                     | Connect to a different database |
+   | SELECT current_database();	   | Show current database |

@@ -1,6 +1,7 @@
 package com.patient_service.dto;
 
 import com.patient_service.dto.validators.CreatePatientValidationGroup;
+import com.patient_service.dto.validators.UpdatePatientValidationGroup;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -13,7 +14,7 @@ public class PatientRequestDTO {
 	@Size(max=100,message="Name cannot exceed 100 character")
 	private String name;
 	
-	@NotBlank(groups = CreatePatientValidationGroup.class ,message="Email is required")
+	@NotBlank(message="Email is required")
 	@Email(message = "Email should be valid")
 	private String email;
 	

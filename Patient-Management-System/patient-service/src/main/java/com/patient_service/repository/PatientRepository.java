@@ -11,4 +11,6 @@ import com.patient_service.model.Patient;
 public interface PatientRepository extends JpaRepository<Patient, UUID> {
 	
 	boolean existsByEmail(String email);
+	
+	boolean existsByEmailAndIdNot(String email, UUID id);
 }

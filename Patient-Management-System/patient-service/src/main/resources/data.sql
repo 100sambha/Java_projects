@@ -1,8 +1,14 @@
-INSERT INTO Address(id, city,state,country) values('8f2b9153-c3e6-453e-9777-6d914a9712fe','Nagar', 'Mah', 'IND');
-INSERT INTO Address(id, city,state,country) values('4ea34780-a30f-4f2c-9bf7-f15e6a7d3d76','Pune', 'Mah', 'IND');
-INSERT INTO Address(id, city,state,country) values('c7743a76-1e68-49fc-be0e-75c8dc2cc50c','Beed', 'Mah', 'IND');
-INSERT INTO Address(id, city,state,country) values('d4473eab-3be9-445e-9b9b-5878fa0db762','Latur', 'Mah', 'IND');
-INSERT INTO Address(id, city,state,country) values('f9b26a5e-ea44-4925-ac81-6078d98f94b1','Nagar', 'Mah', 'IND');
+-- Create Address Table if it does not exist
+CREATE TABLE IF NOT EXISTS address (id UUID PRIMARY KEY, city VARCHAR(255), state VARCHAR(255), country VARCHAR(255));
+
+-- Create Patient Table if it does not exist
+CREATE TABLE IF NOT EXISTS PATIENT (id UUID PRIMARY KEY, name VARCHAR(255), email VARCHAR(255), date_Of_Birth DATE, registered_Date DATE, address_id UUID, FOREIGN KEY (address_id) REFERENCES address(id));
+
+INSERT INTO address(id, city,state,country) values('8f2b9153-c3e6-453e-9777-6d914a9712fe','Nagar', 'Mah', 'IND');
+INSERT INTO address(id, city,state,country) values('4ea34780-a30f-4f2c-9bf7-f15e6a7d3d76','Pune', 'Mah', 'IND');
+INSERT INTO address(id, city,state,country) values('c7743a76-1e68-49fc-be0e-75c8dc2cc50c','Beed', 'Mah', 'IND');
+INSERT INTO address(id, city,state,country) values('d4473eab-3be9-445e-9b9b-5878fa0db762','Latur', 'Mah', 'IND');
+INSERT INTO address(id, city,state,country) values('f9b26a5e-ea44-4925-ac81-6078d98f94b1','Nagar', 'Mah', 'IND');
 
 INSERT INTO PATIENT(id,name,email,date_Of_Birth,registered_Date,address_id) values('72b0da01-9fe4-41ad-af72-541a5ea8acd6','shankar','100sambha@gmail.com','2025-02-02','2025-02-03','8f2b9153-c3e6-453e-9777-6d914a9712fe');
 INSERT INTO PATIENT(id,name,email,date_Of_Birth,registered_Date,address_id) values('dfbab196-aca3-4496-b78b-08ea8f614279','shankar','101sambha@gmail.com','2025-02-02','2025-02-03','4ea34780-a30f-4f2c-9bf7-f15e6a7d3d76');

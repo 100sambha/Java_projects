@@ -1,7 +1,7 @@
 # Insert Commands (data.sql)
 
-```sql
 ## Individual Inserts
+```sql
 INSERT INTO Address (id, city, state, country) 
 VALUES ('8f2b9153-c3e6-453e-9777-6d914a9712fe', 'Nagar', 'MH', 'IND');
 
@@ -16,9 +16,11 @@ VALUES ('d4473eab-3be9-445e-9b9b-5878fa0db762', 'Latur', 'MH', 'IND');
 
 INSERT INTO Address (id, city, state, country) 
 VALUES ('f9b26a5e-ea44-4925-ac81-6078d98f94b1', 'Nagar', 'MH', 'IND');
+```
 
 
 ## Multi Row Inserts
+```sql
 INSERT INTO Patient (id, name, email, date_of_birth, registered_date, address_id) VALUES
   ('72b0da01-9fe4-41ad-af72-541a5ea8acd6', 'Shankar', '100sambha@gmail.com', '2025-02-02', '2025-02-03', '8f2b9153-c3e6-453e-9777-6d914a9712fe'),
   ('dfbab196-aca3-4496-b78b-08ea8f614279', 'Shankar', '101sambha@gmail.com', '2025-02-02', '2025-02-03', '4ea34780-a30f-4f2c-9bf7-f15e6a7d3d76'),
@@ -26,21 +28,19 @@ INSERT INTO Patient (id, name, email, date_of_birth, registered_date, address_id
   ('80b0cf94-bd7c-42db-89a7-d8d192680200', 'Shankar', '103sambha@gmail.com', '2025-02-02', '2025-02-03', 'd4473eab-3be9-445e-9b9b-5878fa0db762'),
   ('3d520727-d250-4c4e-a3b2-61ff8b28f27c', 'Shankar', '104sambha@gmail.com', '2025-02-02', '2025-02-03', 'f9b26a5e-ea44-4925-ac81-6078d98f94b1');
 ```
-
-#
-> - SELECT * FROM PATIENT;
-> - SELECT * FROM PATIENT;
-> - SHOW COLUMNS FROM PATIENT;
-> - SHOW COLUMNS FROM ADDRESS;
-#
+```sql
+ - SELECT * FROM PATIENT;
+ - SELECT * FROM PATIENT;
+ - SHOW COLUMNS FROM PATIENT;
+ - SHOW COLUMNS FROM ADDRESS;
+```
 
 ## validated Annotation use
+```java
 > @Validated({UpdatePatientValidationGroup.class, Default.class})		-->used with controller class methods
-
 > @NotBlank(groups=UpdatePatientValidationGroup.class, message="Required")	-->We can ignore this field when we are updating the filed in json, only if we are not setting it in service class update method, like in create method. used with model classes
+```
 
-
-#
 # Docker
 
 1. **Lightweight Containers**  
@@ -66,16 +66,22 @@ INSERT INTO Patient (id, name, email, date_of_birth, registered_date, address_id
 
 ## Docker Commands
 
+   **Pull Image**
    - docker pull postgres:latest
 
+   **Show Images**
    - docker images
+
+   **Show Containers**
    - docker ps
    - docker ps -a
 
+   **Show Networks**
    - docker network ls
    - docker network create patient-network
    - docker inspect patient-network
 
+   **Create container from Images**
    - docker run -d \
       --name postgres-db \
       --network patient-network \
@@ -86,20 +92,52 @@ INSERT INTO Patient (id, name, email, date_of_birth, registered_date, address_id
       -p 5000:5432 \
       postgres:latest
    
+   **Start and stop container**
    - docker start postgres-db
    - docker stop postgres-db
 
+   **Excute Container in iterative or detached mode**
    - docker exec -it postgres-db psql -U root -d patients_records
 
 ### Some postgres-db commands
-   | Title | Description |
-   |---|---|
-   | \l                             | list databases |
-   | \list                          | list databases |
-   | \c                             | database_nameConnect to a database |
-   | \dt                            | List tables in current database |
-   | \d table_name                  | Show table structure (columns, types, constraints) |
-   | CREATE DATABASE dbname;	      | Create a new database |
-   | DROP DATABASE dbname;	         | Delete a database |
-   | \c dbname	                     | Connect to a different database |
-   | SELECT current_database();	   | Show current database |
+| Command                         	| Description                                       		|
+|-----------------------------------|-----------------------------------------------------------|
+| `\l`                            	| List databases                                   			|
+| `\list`                        	| List databases                                  			|
+| `\c database_name`            | Connect to a database										|
+| `\dt`                           	| List tables in the current database               		|
+| `\d table_name`               	| Show table structure (columns, types, constraints)		|
+| `CREATE DATABASE dbname;`   	| Create a new database										|
+| `DROP DATABASE dbname;`      | Delete a database											|
+| `\c dbname`                    	| Connect to a different database							|
+| `SELECT current_database();`| Show current database										|
+
+
+### Java Docker commands
+
+**Build Command**
+- docker build -t my-app .
+
+**Run Docker image (create container)**
+
+- docker run -d
+  --name patient-service
+  --network patient-network
+  -e SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/patients_records
+  -e SPRING_DATASOURCE_USERNAME=root
+  -e SPRING_DATASOURCE_PASSWORD=admin
+  -e SPRING_JPA_HIBERNATE_DDL_AUTO=update
+  -e SPRING_SQL_INIT_MODE=always
+  -p 8090:8090
+  my_app
+
+- docker run -d
+	--name biiling-service
+	--network patient-network
+	-p 8091:8091
+	-p 9001:9001
+	my_app_biiling:latest
+	   	
+	   	
+## gRPC - gRPC stands for g Remote Procedure Call developed by google
+- proto file can be used to we can describe gRPC service as well as request and response

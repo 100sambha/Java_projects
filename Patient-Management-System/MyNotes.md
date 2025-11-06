@@ -98,7 +98,28 @@ INSERT INTO Patient (id, name, email, date_of_birth, registered_date, address_id
 
    **Excute Container in iterative or detached mode**
    - docker exec -it postgres-db psql -U root -d patients_records
-
+   
+   Here kafka won't working for local java springboot code here listeners need to update because we are using kafka from 
+   docker
+   
+   **Create Kafka container from image**
+   - docker run -d \
+   	  --name kafka \
+   	  --network patient-network \
+   	  -e KAFKA_NODE_ID=1 \
+   	  -e KAFKA_PROCESS_ROLES=broker,controller \
+   	  -e KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER \
+   	  -e KAFKA_CONTROLLER_QUORUM_VOTERS=1@localhost:9093 \
+   	  -e KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT \
+   	  -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092,EXTERNAL://localhost:9094 \
+   	  -e KAFKA_LISTENERS=PLAINTEXT://localhost:9092,CONTROLLER://localhost:9093,EXTERNAL://localhost:9094 \
+   	  -p 9092:9092 \
+   	  -p 9094:9094 \
+   	  apache/kafka:latest
+   
+   ***Commands***
+   -  docker exec -it kafka bash
+   -
 ### Some postgres-db commands
 | Command                         	| Description                                       		|
 |-----------------------------------|-----------------------------------------------------------|
@@ -128,15 +149,23 @@ INSERT INTO Patient (id, name, email, date_of_birth, registered_date, address_id
   -e SPRING_DATASOURCE_PASSWORD=admin
   -e SPRING_JPA_HIBERNATE_DDL_AUTO=update
   -e SPRING_SQL_INIT_MODE=always
+  -e BILLING_SERVICE_SERVICE_ADDRESS=biiling-service
+  -e BILLING_SERVICE_SERVICE_GRPC_PORT=9001
   -p 8090:8090
   my_app
+  
+
+**Build Command**
+- docker build -t my_app_billing .
+
+**Run Docker image (create container)**
 
 - docker run -d
-	--name biiling-service
+	--name billing-service
 	--network patient-network
 	-p 8091:8091
 	-p 9001:9001
-	my_app_biiling:latest
+	my_app_billing:latest
 	   	
 	   	
 ## gRPC - gRPC stands for g Remote Procedure Call developed by google

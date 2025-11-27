@@ -88,7 +88,8 @@ INSERT INTO Patient (id, name, email, date_of_birth, registered_date, address_id
       -e POSTGRES_USER=root \
       -e POSTGRES_PASSWORD=admin \
       -e POSTGRES_DB=patients_records \
-      -v my_pgdata:/var/lib/postgresql/data \
+      -e TZ=Asia/Kolkata \
+      -v my_pgdata:/var/lib/postgresql \
       -p 5000:5432 \
       postgres:latest
    
@@ -103,19 +104,21 @@ INSERT INTO Patient (id, name, email, date_of_birth, registered_date, address_id
    docker
    
    **Create Kafka container from image**
-   - docker run -d \
-   	  --name kafka \
-   	  --network patient-network \
-   	  -e KAFKA_NODE_ID=1 \
-   	  -e KAFKA_PROCESS_ROLES=broker,controller \
-   	  -e KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER \
-   	  -e KAFKA_CONTROLLER_QUORUM_VOTERS=1@localhost:9093 \
-   	  -e KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT \
-   	  -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092,EXTERNAL://localhost:9094 \
-   	  -e KAFKA_LISTENERS=PLAINTEXT://localhost:9092,CONTROLLER://localhost:9093,EXTERNAL://localhost:9094 \
-   	  -p 9092:9092 \
-   	  -p 9094:9094 \
-   	  apache/kafka:latest
+	- docker run -d \
+		  --name kafka \
+		  --network patient-network \
+		  -e KAFKA_NODE_ID=1 \
+		  -e KAFKA_PROCESS_ROLES=broker,controller \
+		  -e KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER \
+		  -e KAFKA_CONTROLLER_QUORUM_VOTERS=1@kafka:9093 \
+		  -e KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT \
+		  -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,EXTERNAL://kafka:9094 \
+		  -e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093,EXTERNAL://0.0.0.0:9094 \
+		  -p 9092:9092 \
+		  -p 9093:9093 \
+		  -p 9094:9094 \
+		  apache/kafka:latest
+
    
    ***Commands***
    -  docker exec -it kafka bash
@@ -137,7 +140,7 @@ INSERT INTO Patient (id, name, email, date_of_birth, registered_date, address_id
 ### Java Docker commands
 
 **Build Command**
-- docker build -t my-app .
+- docker build -t my_app_patient .
 
 **Run Docker image (create container)**
 
@@ -149,10 +152,11 @@ INSERT INTO Patient (id, name, email, date_of_birth, registered_date, address_id
   -e SPRING_DATASOURCE_PASSWORD=admin
   -e SPRING_JPA_HIBERNATE_DDL_AUTO=update
   -e SPRING_SQL_INIT_MODE=always
-  -e BILLING_SERVICE_SERVICE_ADDRESS=biiling-service
+  -e BILLING_SERVICE_SERVICE_ADDRESS=billing-service
   -e BILLING_SERVICE_SERVICE_GRPC_PORT=9001
+  -e SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9094
   -p 8090:8090
-  my_app
+  my_app_patient
   
 
 **Build Command**
@@ -166,6 +170,18 @@ INSERT INTO Patient (id, name, email, date_of_birth, registered_date, address_id
 	-p 8091:8091
 	-p 9001:9001
 	my_app_billing:latest
+	
+**Build Command**
+- docker build -t my_app_analytical .
+
+**Run Docker image (create container)**
+
+- docker run -d
+	--name analytical-service
+	--network patient-network
+    -e SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9094
+	-p 8092:8092
+	my_app_analytical:latest
 	   	
 	   	
 ## gRPC - gRPC stands for g Remote Procedure Call developed by google

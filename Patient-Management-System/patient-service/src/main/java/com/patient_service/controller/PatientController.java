@@ -3,6 +3,8 @@ package com.patient_service.controller;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.patient_service.dto.AddressResponseDTO;
 import com.patient_service.dto.PatientRequestDTO;
 import com.patient_service.dto.PatientResponseDTO;
 import com.patient_service.dto.validators.CreatePatientValidationGroup;
@@ -39,6 +42,12 @@ public class PatientController {
 	public ResponseEntity<List<PatientResponseDTO>> getPatients() {
 		List<PatientResponseDTO> patients = patientService.getAllPatient();
 		return ResponseEntity.ok().body(patients);
+	}
+	
+	@GetMapping("/p1")
+	public ResponseEntity<PatientResponseDTO> entity(){
+		PatientResponseDTO dto = new PatientResponseDTO("100", "Sambhaji", new AddressResponseDTO("Pune", "Mh", "IN"));
+		return ResponseEntity.status(200).body(dto); 
 	}
 	
 	

@@ -88,6 +88,11 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+<!--				<configuration>-->
+<!--					<systemPropertyVariables>-->
+<!--						<spring.profiles.active>${spring.profiles.active}</spring.profiles.active>-->
+<!--					</systemPropertyVariables>-->
+<!--				</configuration>-->
 			</plugin>
 
 			<!-- PROTO -->
@@ -113,5 +118,19 @@
 			</plugin>
 		</plugins>
 	</build>
+<!--	<profiles>-->
+<!--		<profile>-->
+<!--			<id>dev</id>-->
+<!--			<properties>-->
+<!--				<spring.profiles.active>dev</spring.profiles.active>-->
+<!--			</properties>-->
+<!--		</profile>-->
 
+<!--		<profile>-->
+<!--			<id>qa</id>-->
+<!--			<properties>-->
+<!--				<spring.profiles.active>qa</spring.profiles.active>-->
+<!--			</properties>-->
+<!--		</profile>-->
+<!--	</profiles>-->
 </project>

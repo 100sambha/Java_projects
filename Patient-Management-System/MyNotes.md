@@ -91,7 +91,7 @@ INSERT INTO Patient (id, name, email, date_of_birth, registered_date, address_id
       -e TZ=Asia/Kolkata \
       -v my_pgdata:/var/lib/postgresql \
       -p 5000:5432 \
-      postgres:latest
+      postgres:latest      
    
    **Start and stop container**
    - docker start postgres-db
@@ -100,6 +100,21 @@ INSERT INTO Patient (id, name, email, date_of_birth, registered_date, address_id
    **Excute Container in iterative or detached mode**
    - docker exec -it postgres-db psql -U root -d patients_records
    
+### Some postgres-db commands
+
+| Command                         	| Description                                       		|
+|-----------------------------------|-----------------------------------------------------------|
+| `\l`                            	| List databases                                   			|
+| `\list`                        	| List databases                                  			|
+| `\c database_name`            	| Connect to a database										|
+| `\dt`                           	| List tables in the current database               		|
+| `\d table_name`               	| Show table structure (columns, types, constraints)		|
+| `CREATE DATABASE dbname;`   		| Create a new database										|
+| `DROP DATABASE dbname;`      		| Delete a database											|
+| `\c dbname`                    	| Connect to a different database							|
+| `SELECT current_database();`		| Show current database										|
+
+      
    Here kafka won't working for local java springboot code here listeners need to update because we are using kafka from 
    docker
    
@@ -122,21 +137,12 @@ INSERT INTO Patient (id, name, email, date_of_birth, registered_date, address_id
    
    ***Commands***
    -  docker exec -it kafka bash
-   -
-### Some postgres-db commands
-| Command                         	| Description                                       		|
-|-----------------------------------|-----------------------------------------------------------|
-| `\l`                            	| List databases                                   			|
-| `\list`                        	| List databases                                  			|
-| `\c database_name`            | Connect to a database										|
-| `\dt`                           	| List tables in the current database               		|
-| `\d table_name`               	| Show table structure (columns, types, constraints)		|
-| `CREATE DATABASE dbname;`   	| Create a new database										|
-| `DROP DATABASE dbname;`      | Delete a database											|
-| `\c dbname`                    	| Connect to a different database							|
-| `SELECT current_database();`| Show current database										|
-
-
+   
+   -  /opt/kafka/bin/kafka-console-producer.sh --topic patient-service --bootstrap-server localhost:9092
+   -  /opt/kafka/bin/kafka-console-consumer.sh --topic patient-service --bootstrap-server localhost:9092 --from-beginning
+   
+   
+   
 ### Java Docker commands
 
 **Build Command**
@@ -179,10 +185,71 @@ INSERT INTO Patient (id, name, email, date_of_birth, registered_date, address_id
 - docker run -d
 	--name analytical-service
 	--network patient-network
-    -e SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9094
+    -e SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
 	-p 8092:8092
 	my_app_analytical:latest
+
+
+**Build Command**
+- docker build -t my_app_gateway .
 	   	
-	   	
+**Run Docker image (create container)**
+- docker run -d
+	--name gateway-service
+	--network patient-network
+	-p 8096:8096
+	my_app_gateway:latest
+	
+
 ## gRPC - gRPC stands for g Remote Procedure Call developed by google
 - proto file can be used to we can describe gRPC service as well as request and response
+
+
+        - id: patient-service
+          uri: http://localhost:8090
+          predicates:
+            - Path=/api/patient/**
+          filters:
+            - StripPrefix=1
+
+        - id: api-docs-patient-docs
+          uri: http://localhost:8090
+          predicates:
+            - Path=/api-docs/patients
+          filters:
+            - RewritePath=/api-docs/patients,/v3/api-docs
+
+
+
+**Build Command**
+- docker build -t my_app_auth .
+
+
+**Run Docker image (create container)**
+- docker run -d \
+	--name auth-service \
+	--network patient-network \
+	-e SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/patients_records \
+	-e SPRING_DATASOURCE_USERNAME=root \
+	-e SPRING_DATASOURCE_PASSWORD=admin \
+	-e SPRING_JPA_HIBERNATE_DDL_AUTO=update \									--needed to set none because of data.sql
+	-e SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver \
+	-e SPRING_SQL_INIT_MODE=always \											--Needed to be removed after dev/qa
+	-e JWT_SECRET=89f2c4da73b19ef4a6c8e9b1d3f547aa1c2d9ef98b23cf451e78a4cd924b6f1e \
+	-p 8098:8098 \
+	my_app_auth
+	
+	
+**Build Command**
+- docker build -t my_app_gateway .
+
+**Run Docker image (create container)**
+- docker run -d \
+	--name gateway-service \
+	--network patient-network \
+	-p 8096:8096 \
+	my_app_gateway
+	
+	
+	
+	
